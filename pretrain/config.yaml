@@ -1,0 +1,49 @@
+network:
+  img_model: resnet50
+  ### this part does not control builder/trainer
+  text_model: bert
+  free_layers: 6
+  text_model_arch: general # specialized/general
+  feature_dim: 768
+
+  projection_head:
+    mlp_hidden_size: 2048
+    projection_size: 768
+  ###
+
+### device setting control by torchrun, not this part
+device_id: 0
+device_num: 1
+###
+
+img_path:
+  en_img_path: '/home/jupyter/cxr_vlp_data/english_pretrain/only_imp.npy'
+  sp_img_path: '/home/jupyter/cxr_vlp_data/spanish_pretrain/PDC_train_int.npy'
+  # you can add your valid data here
+
+text_path:
+  en_text_csv_path: '/home/jupyter/cxr_vlp_data/english_pretrain/200k_find_imp.csv'
+  sp_text_csv_path: '/home/jupyter/cxr_vlp_data/spanish_pretrain/PDC_cleaned.csv'
+# params for trainer
+trainer:
+  batch_size: 256
+  test_batch_size: 200
+  checkpoint_interval: 100000
+  max_epochs: 200
+  lr: 2.0e-5
+  num_workers: 8
+  test_interval: 2
+  loss: 'only_clip' # 
+  smooth: 'exp' # you don't need smooth here, because no prior knowledege yet
+  ratio: 0.2
+
+optimizer:
+  params:
+    lr: 2.0e-5
+    # momentum: 0.9
+    weight_decay: 5.0e-2
+
+wandb_name: 'gcp_english_spanish_pretrain'
+
+# launch script for torchrun
+# torchrun --nnodes=1 --nproc_per_node=2 main.py
