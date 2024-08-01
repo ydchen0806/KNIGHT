@@ -1,0 +1,80 @@
+NAME: 'seg_3d'
+
+MODEL:
+    model_type: 'UNETR'  # 'mala' or 'superhuman' or 'UNETR'
+    input_nc: 1
+    output_nc: 3
+    unetr_size: [32,160,160]
+    patch_size: [4,16,16]
+    kernel_size: [1,3,3]
+    if_sigmoid: True
+    # for 'mala':
+    init_mode_mala: 'kaiming'
+    # for 'superhuman':
+    if_skip: 'False'
+    filters: 
+        - 28
+        - 36
+        - 48
+        - 64
+        - 80
+    upsample_mode: 'bilinear'  # 'bilinear', 'nearest', 'transpose', 'transposeS'
+    decode_ratio: 1
+    merge_mode: 'add'  # 'add', 'cat'
+    pad_mode: 'zero'  # 'zero', 'replicate'
+    bn_mode: 'async'  # 'sync', 'async'
+    relu_mode: 'elu'  # 'elu', 'relu', 'leaky'
+    init_mode: 'kaiming_normal'  # 'kaiming_normal', 'kaiming_uniform', 'xavier_normal', 'xavier_uniform'
+
+TRAIN:
+    resume: False
+    pretrain: False
+    pretrain_path: '/data/cyd0806/EM_raw_image/MAE/32*160*160_4*16*16_batch_2_mask0.85_1231/mae_vit_model_1220_32*160*160_1000.pth'
+    frozen_lr: False
+    if_valid: True
+    if_seg: True
+    cache_path: '/data/cyd0806/superhuman/caches/superhuman_model_MSE_CREMIB_0106/'
+    save_path: '/data/cyd0806/superhuman/models/superhuman_model_MSE_CREMIB_0106/'
+    
+    pad: 0
+    loss_func: 'WeightedMSELoss'   # 'WeightedBCELoss', 'BCELoss'
+    if_verse: False
+    separate_weight: False
+
+    opt_type: 'adam'
+    total_iters: 200000
+    warmup_iters: 0
+    base_lr: 0.0001
+    end_lr: 0.0001
+    display_freq: 100
+    valid_freq: 2000
+    save_freq: 2000
+    decay_iters: 100000
+    weight_decay: ~
+    power: 1.5
+
+    batch_size: 2
+    num_workers: 2
+    if_cuda: True
+
+    random_seed: 555  # -1 is none
+
+DATA:
+    dataset_name: 'cremi-C'  # 'snemi3d-ac3', 'cremi-A', 'cremi'
+    valid_dataset: 'cremiC'
+    train_split: 75
+    test_split: 50
+    data_folder: '/data/cyd0806/superhuman'
+    padding: 50
+    shift_channels: ~
+    if_dilate: True
+    widen_way: True
+    if_scale_aug: False
+    if_filp_aug: True
+    if_rotation_aug: True
+    if_intensity_aug: True
+    if_elastic_aug: True
+
+TEST:
+    pad: 0
+    model_name: ''
