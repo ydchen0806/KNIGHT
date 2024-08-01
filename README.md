@@ -22,7 +22,6 @@ sudo docker pull registry.cn-hangzhou.aliyuncs.com/mybitahub/large_model:mamba02
 - [ ] Wrote the README for code usage
 - [ ] Open-sourced the pre-training dataset
 - [ ] Upload the pre-trained weights
-- [ ] Release the private dataset MEC
 
 
 ## Cite
