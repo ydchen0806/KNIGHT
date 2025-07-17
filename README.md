@@ -1,4 +1,4 @@
-# KNIGHT
+# GTGM
 This repository contains the official implementation of the paper **[Generative text-guided 3d vision-language pretraining for unified medical image segmentation](https://arxiv.org/pdf/2306.04811)**. It provides all the experimental settings and source code used in our research. The paper also includes theoretical proofs. For more details, please refer to our original paper.
 
 <div style="text-align: center;">
